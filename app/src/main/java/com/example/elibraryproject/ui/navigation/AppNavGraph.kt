@@ -3,8 +3,11 @@ package com.example.elibraryproject.ui.navigation
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
+import com.example.elibraryproject.ui.screens.DetailScreen
 import com.example.elibraryproject.ui.screens.KatalogScreen
 import com.example.elibraryproject.ui.screens.LandingScreen
 import com.example.yourapp.ui.screens.HomeScreen
@@ -16,7 +19,8 @@ fun AppNavGraph(
 ) {
     NavHost(
         navController = navController,
-        startDestination = "home"
+        startDestination = "home",
+        modifier = modifier
     ) {
 
         composable("home") {
@@ -26,6 +30,21 @@ fun AppNavGraph(
         composable("katalog") {
             KatalogScreen(navController)
         }
-    }
 
+        // ROUTE DETAIL DENGAN PARAMETER bookId
+        composable(
+            route = "detail/{bookId}",
+            arguments = listOf(
+                navArgument("bookId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+            val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+            DetailScreen(
+                navController = navController,
+                bookId = bookId
+            )
+        }
+    }
 }

@@ -7,18 +7,14 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.rememberScrollState
-import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.example.elibraryproject.ui.components.AppHeader
 import com.example.elibraryproject.ui.components.BookCard
 import com.example.yourapp.data.dummyBooks
-
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -62,7 +58,7 @@ fun LandingScreen(navController: NavHostController) {
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                items(dummyBooks) { book ->
+                items(dummyBooks.take(5)) { book ->
                     BookCard(
                         book = book,
                         onClick = { navController.navigate("detail/${book.id}") }
@@ -87,7 +83,7 @@ fun LandingScreen(navController: NavHostController) {
             Spacer(modifier = Modifier.height(12.dp))
         }
 
-        // GRID BUKU (2 kolom otomatis)
+        // GRID BUKU
         items(dummyBooks) { book ->
             BookCard(
                 book = book,
