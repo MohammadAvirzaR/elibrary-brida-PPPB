@@ -1,6 +1,5 @@
 package com.example.elibraryproject.ui.components
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -9,7 +8,6 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -26,12 +24,13 @@ fun BookCard(
 ) {
     Card(
         modifier = modifier
-            .width(150.dp)
             .clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Column(modifier = Modifier.padding(10.dp)) {
+        Column(
+            modifier = Modifier.padding(12.dp)
+        ) {
             AsyncImage(
                 model = book.imageUrl,
                 contentDescription = book.title,
@@ -40,21 +39,22 @@ fun BookCard(
                     .height(180.dp)
                     .fillMaxWidth()
                     .clip(RoundedCornerShape(12.dp))
-                    .background(Color.LightGray)
             )
 
-            Spacer(modifier = Modifier.height(10.dp))
+            Spacer(modifier = Modifier.height(8.dp))
 
             Text(
                 text = book.title,
-                maxLines = 2,
-                style = MaterialTheme.typography.titleMedium
+                style = MaterialTheme.typography.titleMedium,
+                maxLines = 2
             )
+
             Spacer(modifier = Modifier.height(4.dp))
+
             Text(
                 text = book.author,
-                color = Color.Gray,
-                style = MaterialTheme.typography.bodyMedium
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Gray
             )
         }
     }

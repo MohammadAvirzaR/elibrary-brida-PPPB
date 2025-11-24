@@ -1,5 +1,6 @@
 package com.example.elibraryproject
 
+import BookViewModelFactory
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,10 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
+import com.example.elibraryproject.data.repository.BookRepository
 import com.example.elibraryproject.ui.components.BottomBar
 import com.example.elibraryproject.ui.navigation.AppNavGraph
 import com.example.elibraryproject.ui.screens.KatalogScreen
+import com.example.elibraryproject.ui.viewmodel.BookViewModel
 
 
 class MainActivity : ComponentActivity() {
@@ -26,6 +30,13 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+            val api = ApiClient.openLibraryApi
+            val repo = BookRepository(api)
+            val vm: BookViewModel = viewModel(
+                factory = BookViewModelFactory(repo)
+            )
+
+
 
             Scaffold(
                 bottomBar = {

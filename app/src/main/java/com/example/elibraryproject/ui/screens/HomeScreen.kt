@@ -20,16 +20,18 @@ fun HomeScreen() {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(16.dp)
+        verticalArrangement = Arrangement.spacedBy(20.dp)
     ) {
 
         // HEADER
-        item { AppHeader() }
+        item {
+            AppHeader()
+        }
 
         // REKOMENDASI
         item {
             Text(
-                text = "Rekomendasi Buku",
+                "Rekomendasi Buku",
                 style = MaterialTheme.typography.titleLarge
             )
         }
@@ -39,7 +41,8 @@ fun HomeScreen() {
                 items(dummyBooks) { book ->
                     BookCard(
                         book = book,
-                        modifier = Modifier.width(160.dp)
+                        modifier = Modifier
+                            .width(150.dp)
                     )
                 }
             }
@@ -48,18 +51,18 @@ fun HomeScreen() {
         // DAFTAR BUKU
         item {
             Text(
-                text = "Daftar Buku",
+                "Daftar Buku",
                 style = MaterialTheme.typography.titleLarge
             )
         }
 
-        // --- GRID MANUAL 2 KOLUMN ---
-        items(dummyBooks.chunked(2)) { rowItems ->
+        // GRID MANUAL 2 KOLOM
+        items(dummyBooks.chunked(2)) { row ->
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
-                for (book in rowItems) {
+                row.forEach { book ->
                     BookCard(
                         book = book,
                         modifier = Modifier
@@ -68,8 +71,7 @@ fun HomeScreen() {
                     )
                 }
 
-                // kalau jumlahnya ganjil → isi spacer
-                if (rowItems.size == 1) {
+                if (row.size == 1) {
                     Spacer(
                         modifier = Modifier
                             .weight(1f)
@@ -80,3 +82,4 @@ fun HomeScreen() {
         }
     }
 }
+

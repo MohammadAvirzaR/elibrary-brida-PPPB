@@ -19,6 +19,7 @@ import com.example.yourapp.data.dummyBooks
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LandingScreen(navController: NavHostController) {
+    var query by remember { mutableStateOf("") }
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
@@ -32,8 +33,10 @@ fun LandingScreen(navController: NavHostController) {
         // HEADER sebagai item full-width
         item(span = { GridItemSpan(2) }) {
             AppHeader(
-                onLogoClick = { navController.navigate("home") },
-                onKatalogClick = { navController.navigate("katalog") }
+                searchQuery = query,
+                onQueryChange = {query = it},
+                onLogoClick = {navController.navigate("home")},
+                onKatalogClick = {navController.navigate("katalog")}
             )
         }
 
