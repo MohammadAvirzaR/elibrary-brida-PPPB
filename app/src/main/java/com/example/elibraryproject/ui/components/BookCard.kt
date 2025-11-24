@@ -14,17 +14,16 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
-import com.example.yourapp.model.Book
+import com.example.elibraryproject.data.model.BookDoc
 
 @Composable
 fun BookCard(
-    book: Book,
+    book: BookDoc,
     modifier: Modifier = Modifier,
     onClick: () -> Unit = {}
 ) {
     Card(
-        modifier = modifier
-            .clickable { onClick() },
+        modifier = modifier.clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -44,7 +43,7 @@ fun BookCard(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = book.title,
+                text = book.title ?: "No Title",
                 style = MaterialTheme.typography.titleMedium,
                 maxLines = 2
             )
@@ -59,4 +58,3 @@ fun BookCard(
         }
     }
 }
-

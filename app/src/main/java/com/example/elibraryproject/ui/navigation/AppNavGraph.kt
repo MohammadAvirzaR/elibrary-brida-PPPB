@@ -10,7 +10,6 @@ import androidx.navigation.navArgument
 import com.example.elibraryproject.ui.screens.DetailScreen
 import com.example.elibraryproject.ui.screens.KatalogScreen
 import com.example.elibraryproject.ui.screens.LandingScreen
-import com.example.yourapp.ui.screens.HomeScreen
 
 @Composable
 fun AppNavGraph(
@@ -31,19 +30,19 @@ fun AppNavGraph(
             KatalogScreen(navController)
         }
 
-        // ROUTE DETAIL DENGAN PARAMETER bookId
+        // DETAIL PAKAI bookKey (String)
         composable(
-            route = "detail/{bookId}",
+            route = "detail/{bookKey}",
             arguments = listOf(
-                navArgument("bookId") {
-                    type = NavType.IntType
+                navArgument("bookKey") {
+                    type = NavType.StringType
                 }
             )
         ) { backStackEntry ->
-            val bookId = backStackEntry.arguments?.getInt("bookId") ?: 0
+            val bookKey = backStackEntry.arguments?.getString("bookKey") ?: ""
             DetailScreen(
                 navController = navController,
-                bookId = bookId
+                bookKey = bookKey
             )
         }
     }

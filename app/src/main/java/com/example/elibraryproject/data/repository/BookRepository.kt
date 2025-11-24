@@ -1,15 +1,12 @@
-package com.example.elibraryproject.data.repository
+import com.example.elibraryproject.data.api.OpenLibraryApi
+import com.example.elibraryproject.data.model.BookDoc
 
-import BookDoc
-import OpenLibraryApi
+class BookRepository(
+    private val api: OpenLibraryApi
+) {
 
-class BookRepository (
-    private val api:OpenLibraryApi
-
-){
     suspend fun searchBooks(query: String): List<BookDoc> {
-        val response = ApiClient.api.searchBooks(query)
-        return response.docs ?: emptyList()
+        val response = api.searchBooks(query)
+        return response.docs
     }
 }
-

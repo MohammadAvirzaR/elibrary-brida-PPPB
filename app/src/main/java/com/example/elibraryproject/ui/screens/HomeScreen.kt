@@ -2,82 +2,40 @@ package com.example.yourapp.ui.screens
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.unit.dp
-import com.example.elibraryproject.AppHeader
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.elibraryproject.ui.components.BookCard
-import com.example.yourapp.data.dummyBooks
+import com.example.elibraryproject.viewmodel.BookViewModel
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(
+    viewModel: BookViewModel = viewModel()
+) {
+    val books = viewModel.books
+    val isLoading = viewModel.isLoading
 
-    LazyColumn(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        verticalArrangement = Arrangement.spacedBy(20.dp)
-    ) {
+    Column(Modifier.fillMaxSize()) {
 
-        // HEADER
-        item {
-            AppHeader()
-        }
-
-        // REKOMENDASI
-        item {
-            Text(
-                "Rekomendasi Buku",
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-
-        item {
-            LazyRow(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                items(dummyBooks) { book ->
-                    BookCard(
-                        book = book,
-                        modifier = Modifier
-                            .width(150.dp)
-                    )
-                }
+        // Search
+        TextField(
+            value = "",
+            onValueChange = { query ->
+                viewModel.search(query)
             }
+        )
+
+        if (isLoading) {
+            CircularProgressIndicator()
+            return@Column
         }
 
-        // DAFTAR BUKU
-        item {
-            Text(
-                "Daftar Buku",
-                style = MaterialTheme.typography.titleLarge
-            )
-        }
-
-        // GRID MANUAL 2 KOLOM
-        items(dummyBooks.chunked(2)) { row ->
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(12.dp)
-            ) {
-                row.forEach { book ->
-                    BookCard(
-                        book = book,
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(260.dp)
-                    )
-                }
-
-                if (row.size == 1) {
-                    Spacer(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(260.dp)
-                    )
-                }
+        LazyColumn {
+            items(books) { book ->
+                BookCard(book)
             }
         }
     }

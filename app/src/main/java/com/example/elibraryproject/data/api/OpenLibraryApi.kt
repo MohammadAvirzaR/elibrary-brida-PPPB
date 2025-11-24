@@ -1,4 +1,6 @@
+package com.example.elibraryproject.data.api
 
+import com.example.elibraryproject.data.model.SearchResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

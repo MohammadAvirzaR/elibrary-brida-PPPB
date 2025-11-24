@@ -1,5 +1,6 @@
 package com.example.elibraryproject
 
+import BookRepository
 import BookViewModelFactory
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -8,7 +9,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -18,11 +18,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.rememberNavController
-import com.example.elibraryproject.data.repository.BookRepository
+import com.example.elibraryproject.data.api.ApiClient
+
 import com.example.elibraryproject.ui.components.BottomBar
 import com.example.elibraryproject.ui.navigation.AppNavGraph
-import com.example.elibraryproject.ui.screens.KatalogScreen
-import com.example.elibraryproject.ui.viewmodel.BookViewModel
+import com.example.elibraryproject.viewmodel.BookViewModel
 
 
 class MainActivity : ComponentActivity() {

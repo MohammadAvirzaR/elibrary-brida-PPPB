@@ -1,6 +1,7 @@
 package com.example.elibraryproject.data.model
 
 data class BookDoc(
+    val key: String? = null,
     val title: String? = "",
     val author_name: List<String>? = emptyList(),
     val cover_i: Int? = null
@@ -14,3 +15,4 @@ data class BookDoc(
     val author: String
         get() = author_name?.firstOrNull() ?: "Unknown Author"
 }
+

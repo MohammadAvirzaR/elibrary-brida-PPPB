@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.example.elibraryproject.ui.components.AppHeader
 import com.example.elibraryproject.ui.components.BookCard
-import com.example.yourapp.data.dummyBooks
+import com.example.elibraryproject.data.dummyBooks
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -64,9 +64,10 @@ fun LandingScreen(navController: NavHostController) {
                 items(dummyBooks.take(5)) { book ->
                     BookCard(
                         book = book,
-                        onClick = { navController.navigate("detail/${book.id}") }
+                        onClick = { navController.navigate("detail/${book.key}") }
                     )
                 }
+
             }
         }
 
@@ -90,7 +91,7 @@ fun LandingScreen(navController: NavHostController) {
         items(dummyBooks) { book ->
             BookCard(
                 book = book,
-                onClick = { navController.navigate("detail/${book.id}") }
+                onClick = { navController.navigate("detail/${book.key}") }
             )
         }
     }

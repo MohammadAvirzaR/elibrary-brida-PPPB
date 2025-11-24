@@ -1,12 +1,12 @@
-package com.example.elibraryproject.ui.viewmodel
+package com.example.elibraryproject.viewmodel
 
+import BookRepository
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.elibraryproject.data.model.BookDoc
-import com.example.elibraryproject.data.repository.BookRepository
 import kotlinx.coroutines.launch
 
 class BookViewModel(
@@ -25,11 +25,9 @@ class BookViewModel(
     fun search(query: String) {
         viewModelScope.launch {
             isLoading = true
-            errorMessage = null
-
             try {
-                val response = repository.searchBooks(query)
-                books = response.docs
+                val bookList = repository.searchBooks(query)
+                books = bookList
             } catch (e: Exception) {
                 errorMessage = "Gagal memuat buku"
             } finally {
