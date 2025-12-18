@@ -1,15 +1,20 @@
 package com.example.elibraryproject.ui.navigation
 
+import BookRepository
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.example.elibraryproject.data.api.ApiClient
 import com.example.elibraryproject.ui.screens.DetailScreen
 import com.example.elibraryproject.ui.screens.KatalogScreen
 import com.example.elibraryproject.ui.screens.LandingScreen
+import com.example.elibraryproject.viewmodel.BookViewModel
+import com.example.elibraryproject.viewmodel.BookViewModelFactory
 
 @Composable
 fun AppNavGraph(
@@ -27,10 +32,22 @@ fun AppNavGraph(
         }
 
         composable("katalog") {
-            KatalogScreen(navController)
+
+            // 🔥 ViewModel HARUS dibuat di sini
+            val viewModel: BookViewModel = viewModel(
+                factory = BookViewModelFactory(
+                    BookRepository(
+                        ApiClient.openLibraryApi
+                    )
+                )
+            )
+
+            KatalogScreen(
+                navController = navController,
+                viewModel = viewModel
+            )
         }
 
-        // DETAIL PAKAI bookKey (String)
         composable(
             route = "detail/{bookKey}",
             arguments = listOf(
@@ -39,7 +56,11 @@ fun AppNavGraph(
                 }
             )
         ) { backStackEntry ->
-            val bookKey = backStackEntry.arguments?.getString("bookKey") ?: ""
+
+            val bookKey = backStackEntry.arguments
+                ?.getString("bookKey")
+                ?: ""
+
             DetailScreen(
                 navController = navController,
                 bookKey = bookKey

@@ -23,7 +23,7 @@ fun BookCard(
     onClick: () -> Unit = {}
 ) {
     Card(
-        modifier = modifier.clickable { onClick() },
+        modifier = Modifier.clickable { onClick() },
         shape = RoundedCornerShape(16.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
@@ -31,8 +31,8 @@ fun BookCard(
             modifier = Modifier.padding(12.dp)
         ) {
             AsyncImage(
-                model = book.imageUrl,
-                contentDescription = book.title,
+                model = book.imageUrl.takeIf { it?.startsWith("http") == true },
+                contentDescription = book.title ?: "",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
                     .height(180.dp)

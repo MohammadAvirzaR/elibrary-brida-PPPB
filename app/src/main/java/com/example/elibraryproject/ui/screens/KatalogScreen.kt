@@ -7,6 +7,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
@@ -16,13 +17,15 @@ import com.example.elibraryproject.viewmodel.BookViewModel
 @Composable
 fun KatalogScreen(
     navController: NavController,
-    viewModel: BookViewModel = viewModel()
+    viewModel: BookViewModel
 ) {
+    LaunchedEffect(Unit) {
+        viewModel.search("android")
+    }
     val books = viewModel.books
     val isLoading = viewModel.isLoading
 
     Column(Modifier.fillMaxSize()) {
-
         if (isLoading) {
             CircularProgressIndicator()
         }
@@ -31,12 +34,13 @@ fun KatalogScreen(
             items(books) { book ->
                 BookCard(
                     book = book,
-                    modifier = Modifier.clickable {
-                        navController.navigate("detail/${book.key ?: ""}")
+                    onClick = {
+                        val key = book.key ?:return@BookCard
+                        navController.navigate("detail/$key")
                     }
                 )
             }
         }
-
     }
 }
+
