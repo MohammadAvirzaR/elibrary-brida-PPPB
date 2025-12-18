@@ -32,25 +32,26 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             val navController = rememberNavController()
+
             val api = ApiClient.openLibraryApi
             val repo = BookRepository(api)
-            val vm: BookViewModel = viewModel(
+
+            val bookViewModel: BookViewModel = viewModel(
                 factory = BookViewModelFactory(repo)
             )
 
-
-
             Scaffold(
+                topBar = {
+                    AppHeader()
+                },
                 bottomBar = {
                     BottomBar(navController)
                 }
             ) { innerPadding ->
                 AppNavGraph(
                     navController = navController,
-                    modifier = Modifier
-                        .fillMaxSize()        // WAJIB
-                        .padding(innerPadding)
-
+                    bookViewModel = bookViewModel,
+                    modifier = Modifier.padding(innerPadding)
                 )
             }
         }
@@ -87,13 +88,6 @@ fun AppHeader() {
             shape = RoundedCornerShape(12.dp)
         )
 
-        // ICONS (HOME + KATALOG)
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                Icons.Default.List,
-                contentDescription = "Katalog",
-                modifier = Modifier.size(28.dp)
-            )
-        }
+
     }
 }
