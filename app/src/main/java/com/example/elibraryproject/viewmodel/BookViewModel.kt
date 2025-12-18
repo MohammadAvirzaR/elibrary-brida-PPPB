@@ -22,12 +22,20 @@ class BookViewModel(
     var errorMessage by mutableStateOf<String?>(null)
         private set
 
-    fun search(query: String) {
+    var searchQuery by mutableStateOf("")
+        private set
+
+    fun onQueryChange(query: String) {
+        searchQuery = query
+    }
+
+    fun submitSearch() {
+        if (searchQuery.isBlank()) return
+
         viewModelScope.launch {
             isLoading = true
             try {
-                val bookList = repository.searchBooks(query)
-                books = bookList
+                books = repository.searchBooks(searchQuery)
             } catch (e: Exception) {
                 errorMessage = "Gagal memuat buku"
             } finally {
@@ -36,3 +44,4 @@ class BookViewModel(
         }
     }
 }
+

@@ -9,7 +9,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.elibraryproject.ui.components.AppHeader
 import com.example.elibraryproject.ui.components.BookCard
+import com.example.elibraryproject.ui.components.SearchBar
 import com.example.elibraryproject.viewmodel.BookViewModel
 
 @Composable
@@ -19,11 +21,16 @@ fun HomeScreen(
 ) {
     val books = viewModel.books
     val isLoading = viewModel.isLoading
+    val query = viewModel.searchQuery
+
+
+
 
 
     LaunchedEffect(Unit) {
         if (books.isEmpty()) {
-            viewModel.search("education")
+            viewModel.onQueryChange("education")
+            viewModel.submitSearch()
         }
     }
 
@@ -32,13 +39,24 @@ fun HomeScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
+        AppHeader(
+            searchQuery = viewModel.searchQuery,
+            onQueryChange = viewModel::onQueryChange,
+            onSearch = viewModel::submitSearch,
+            onKatalogClick = {
+                navController.navigate("katalog")
+            }
 
-        Text(
-            text = "Rekomendasi Buku",
-            style = MaterialTheme.typography.titleLarge
         )
 
-        Spacer(modifier = Modifier.height(12.dp))
+
+
+
+
+
+
+
+        Spacer(modifier = Modifier.height(16.dp))
 
         if (isLoading) {
             Box(

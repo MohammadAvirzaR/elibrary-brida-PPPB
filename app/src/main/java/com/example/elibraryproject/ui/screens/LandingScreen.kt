@@ -34,9 +34,10 @@ fun LandingScreen(navController: NavHostController) {
         item(span = { GridItemSpan(2) }) {
             AppHeader(
                 searchQuery = query,
-                onQueryChange = {query = it},
-                onLogoClick = {navController.navigate("home")},
-                onKatalogClick = {navController.navigate("katalog")}
+                onQueryChange = { query = it },
+                onSearch = { /* sementara kosong */ },
+                onLogoClick = { navController.navigate("home") },
+                onKatalogClick = { navController.navigate("katalog") }
             )
         }
 

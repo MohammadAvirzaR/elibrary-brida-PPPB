@@ -41,9 +41,7 @@ class MainActivity : ComponentActivity() {
             )
 
             Scaffold(
-                topBar = {
-                    AppHeader()
-                },
+
                 bottomBar = {
                     BottomBar(navController)
                 }
